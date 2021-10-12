@@ -1,7 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import 'package:flutter/painting.dart';
 import 'package:instagram_clone/constants.dart';
+import 'package:instagram_clone/routes/bottom_nav_bar_routes.dart';
+import 'package:instagram_clone/screens/profile_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -12,48 +13,70 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
 
+
+  BottomNavBarRoutes _bottomNavBarRoutes = BottomNavBarRoutes();
+
   int _selectedIndex=0;
 
-
-    void _onItemTapped(int index) {
+      void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+    
+      _bottomNavBarRoutes.navBarRoutes(_selectedIndex, context);
+
+      
+      
     });
   }
+
+  BottomNavigationBar  BottomNavBar() {
+
+    return BottomNavigationBar(
+
+        // ignore: prefer_const_literals_to_create_immutables
+        items: [
+          BottomNavigationBarItem(
+            backgroundColor: Colors.white,
+            icon: Icon(Icons.home_outlined, color: kColorBlack),
+            label: "",
+          ),BottomNavigationBarItem(
+            icon: Icon(Icons.search,  color: kColorBlack),
+             label: "",
+          ),BottomNavigationBarItem(
+            
+            icon: Icon(Icons.add,  color: kColorBlack),
+             label: "",
+          ),BottomNavigationBarItem(
+            icon: Icon(Icons.favorite_border_rounded,  color: kColorBlack),
+             label: "",
+          ),BottomNavigationBarItem(
+            icon: Icon(Icons.person, color: kColorBlack),
+             label: "",
+
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+
+        
+      );
+      
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-          items: [
-            BottomNavigationBarItem(
-              backgroundColor: Colors.white,
-              icon: Icon(Icons.home_outlined, color: kColorBlack),
-              label: "",
-            ),BottomNavigationBarItem(
-              icon: Icon(Icons.search,  color: kColorBlack),
-               label: "",
-            ),BottomNavigationBarItem(
-              icon: Icon(Icons.add,  color: kColorBlack),
-               label: "",
-            ),BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_border_rounded,  color: kColorBlack),
-               label: "",
-            ),BottomNavigationBarItem(
-              icon: Icon(Icons.person, color: kColorBlack),
-               label: "",
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-        ),
+        bottomNavigationBar: BottomNavBar(),
         appBar: MainScreenAppBarWidget(),
         body: Column(
             children: [MainScreenStoriesWidget(), MainScreenBodyWidget()]),
       ),
     );
   }
+
+ 
 
   Expanded MainScreenBodyWidget() {
     return Expanded(
@@ -182,3 +205,4 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 }
+
